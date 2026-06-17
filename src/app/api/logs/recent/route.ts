@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const dateStr = searchParams.get('date')
@@ -41,7 +43,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch records between weekAgoDate and targetDate (excluding targetDate) for sleep avg
-    const sleepRecords = await prisma.dailyLog.findMany({
+    let sleepRecords = await prisma.dailyLog.findMany({
       where: {
         date: {
           gte: weekAgoDate,
@@ -52,6 +54,24 @@ export async function GET(request: NextRequest) {
         sleep: true,
       },
     })
+
+    // Fallback: If no records in the last 7 days, just get the last 7 records available
+    if (sleepRecords.length === 0) {
+      sleepRecords = await prisma.dailyLog.findMany({
+        where: {
+          date: {
+            lt: targetDate,
+          },
+        },
+        orderBy: {
+          date: 'desc',
+        },
+        take: 7,
+        select: {
+          sleep: true,
+        },
+      })
+    }
 
     let sleepAvg = null
     if (sleepRecords.length > 0) {
@@ -64,6 +84,7 @@ export async function GET(request: NextRequest) {
       sleepAvg: sleepAvg,
     })
   } catch (error) {
+    console.error('API Error:', error)
     return NextResponse.json({ error: 'Failed to fetch recent data' }, { status: 500 })
   }
 }

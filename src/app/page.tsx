@@ -44,7 +44,7 @@ export default function DiaryApp() {
 
         if (!isMounted) return
 
-        if (recentData.sleepAvg !== null) {
+        if (recentData?.sleepAvg != null) {
           setSleepAvg(recentData.sleepAvg)
         } else {
           setSleepAvg(null)
@@ -55,8 +55,8 @@ export default function DiaryApp() {
           setSleep(recordData.sleep?.toString() || '')
           setReflection(recordData.reflection || '')
         } else {
-          setAbstinence(recentData.abstinence !== null ? recentData.abstinence.toString() : '')
-          setSleep(recentData.sleepAvg !== null ? recentData.sleepAvg.toString() : '')
+          setAbstinence(recentData?.abstinence != null ? recentData.abstinence.toString() : '')
+          setSleep(recentData?.sleepAvg != null ? recentData.sleepAvg.toString() : '')
           setReflection('')
         }
       } catch (error) {
