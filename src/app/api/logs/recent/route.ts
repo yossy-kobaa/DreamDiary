@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
 
     let sleepAvg = null
     if (sleepRecords.length > 0) {
-      const sum = sleepRecords.reduce((acc, curr) => acc + curr.sleep, 0)
+      const sum = sleepRecords.reduce((acc: number, curr: any) => acc + curr.sleep, 0)
       sleepAvg = Math.round((sum / sleepRecords.length) * 10) / 10
     }
 
