@@ -56,7 +56,7 @@ export default function DiaryApp() {
           setReflection(recordData.reflection || '')
         } else {
           setAbstinence(recentData.abstinence !== null ? recentData.abstinence.toString() : '')
-          setSleep('')
+          setSleep(recentData.sleepAvg !== null ? recentData.sleepAvg.toString() : '')
           setReflection('')
         }
       } catch (error) {

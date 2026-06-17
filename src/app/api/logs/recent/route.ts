@@ -35,7 +35,9 @@ export async function GET(request: NextRequest) {
 
     let abstinenceDefault = null
     if (latestRecord) {
-      abstinenceDefault = latestRecord.abstinence + 1
+      const diffTime = targetDate.getTime() - latestRecord.date.getTime()
+      const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
+      abstinenceDefault = latestRecord.abstinence + diffDays
     }
 
     // Fetch records between weekAgoDate and targetDate (excluding targetDate) for sleep avg
