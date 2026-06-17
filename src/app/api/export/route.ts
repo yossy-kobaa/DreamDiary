@@ -14,7 +14,7 @@ export async function GET() {
     }
 
     const headers = ['date', 'abstinence', 'sleep', 'reflection']
-    const csvRows = logs.map(log => {
+    const csvRows = logs.map((log: any) => {
       // Format date to YYYY-MM-DD
       const dateStr = log.date.toISOString().split('T')[0]
       const row = [
