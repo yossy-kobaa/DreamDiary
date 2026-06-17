@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DreamDiary - Keep pushing forward",
   description: "A modern daily log application with a beautiful UI to track your goals, abstinence, and sleep.",
+  icons: {
+    apple: "/icon-192.png",
+  },
 };
 
 export default function RootLayout({
