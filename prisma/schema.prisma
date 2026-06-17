@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model DailyLog {
+  id         String   @id @default(uuid())
+  date       DateTime @unique
+  abstinence Int
+  sleep      Float
+  reflection String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
